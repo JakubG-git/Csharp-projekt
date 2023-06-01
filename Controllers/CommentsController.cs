@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -11,6 +12,7 @@ using TMS.Models;
 
 namespace TMS.Controllers
 {
+    [Authorize]
     public class CommentsController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -78,12 +80,18 @@ namespace TMS.Controllers
             {
                 return NotFound();
             }
-
+            
             var comments = await _context.Comments.FindAsync(id);
             if (comments == null)
             {
                 return NotFound();
             }
+            if (comments.UserId != _userManager.GetUserId(this.User))
+            {
+                // return Unauthorized();
+                return View("Error", new ErrorViewModel { RequestId = "401" });
+            }
+            
             return View(comments);
         }
 
@@ -97,6 +105,11 @@ namespace TMS.Controllers
             if (id != comments.Id)
             {
                 return NotFound();
+            }
+            if (comments.UserId != _userManager.GetUserId(this.User))
+            {
+                // return Unauthorized();
+                return View("Error", new ErrorViewModel { RequestId = "401" });
             }
 
             if (ModelState.IsValid)
@@ -123,6 +136,7 @@ namespace TMS.Controllers
         }
 
         // GET: Comments/Delete/5
+        // Admin or owner of comment can delete it
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.Comments == null)
@@ -136,7 +150,11 @@ namespace TMS.Controllers
             {
                 return NotFound();
             }
-
+            if (comments.UserId != _userManager.GetUserId(this.User) && !User.IsInRole("Admin"))
+            {
+                // return Unauthorized();
+                return View("Error", new ErrorViewModel { RequestId = "401" });
+            }
             return View(comments);
         }
 
@@ -150,6 +168,11 @@ namespace TMS.Controllers
                 return Problem("Entity set 'ApplicationDbContext.Comments'  is null.");
             }
             var comments = await _context.Comments.FindAsync(id);
+            if (comments.UserId != _userManager.GetUserId(this.User) && !User.IsInRole("Admin"))
+            {
+                // return Unauthorized();
+                return View("Error", new ErrorViewModel { RequestId = "401" });
+            }
             if (comments != null)
             {
                 _context.Comments.Remove(comments);
@@ -163,5 +186,7 @@ namespace TMS.Controllers
         {
           return (_context.Comments?.Any(e => e.Id == id)).GetValueOrDefault();
         }
+        
     }
+    
 }
