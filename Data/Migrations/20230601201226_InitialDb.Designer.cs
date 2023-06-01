@@ -11,7 +11,7 @@ using TMS.Data;
 namespace TMS.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230601172429_InitialDb")]
+    [Migration("20230601201226_InitialDb")]
     partial class InitialDb
     {
         /// <inheritdoc />
