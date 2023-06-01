@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -12,7 +11,6 @@ using TMS.Models;
 
 namespace TMS.Controllers
 {
-    [Authorize]
     public class CommentsController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -25,7 +23,6 @@ namespace TMS.Controllers
         }
 
         // GET: Comments
-        [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
               return _context.Comments != null ? 
@@ -62,12 +59,11 @@ namespace TMS.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Komentarz")] Comments comments)
+        public async Task<IActionResult> Create([Bind("Id,Komentarz,UserId")] Comments comments)
         {
-            var userId = _userManager.GetUserId(this.User);
             if (ModelState.IsValid)
             {
-                comments.UserId = userId;
+                comments.UserId = _userManager.GetUserId(this.User);
                 _context.Add(comments);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -96,7 +92,7 @@ namespace TMS.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Komentarz")] Comments comments)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Komentarz,UserId")] Comments comments)
         {
             if (id != comments.Id)
             {

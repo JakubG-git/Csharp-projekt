@@ -70,9 +70,6 @@ using (var scope = app.Services.CreateScope())
     var email = builder.Configuration.GetSection("Admin")["Email"] ??
                 throw new InvalidOperationException("Admin email not found.");
     
-    // print email
-    Console.WriteLine(email);
-    
     var password = builder.Configuration.GetSection("Admin")["Password"] ??
                    throw new InvalidOperationException("Admin password not found.");
     var admin = new IdentityUser {UserName = email, Email = email};
