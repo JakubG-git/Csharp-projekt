@@ -65,13 +65,34 @@ using (var scope = app.Services.CreateScope())
             await roleManager.CreateAsync(new IdentityRole(role));
         }
     }
-}  
+    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
+
+    var email = builder.Configuration.GetSection("Admin")["Email"] ??
+                throw new InvalidOperationException("Admin email not found.");
+    
+    // print email
+    Console.WriteLine(email);
+    
+    var password = builder.Configuration.GetSection("Admin")["Password"] ??
+                   throw new InvalidOperationException("Admin password not found.");
+    var admin = new IdentityUser {UserName = email, Email = email};
+    
+    if (await userManager.FindByEmailAsync(admin.Email) == null)
+    {
+        var result = await userManager.CreateAsync(admin, password);
+        if (result.Succeeded)
+        {
+            await userManager.AddToRoleAsync(admin, "Admin");
+        }
+    }
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseMigrationsEndPoint();
 }
+
 else
 {
     app.UseExceptionHandler("/Home/Error");
