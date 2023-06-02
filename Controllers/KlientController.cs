@@ -28,6 +28,16 @@ namespace TMS.Controllers
                           View(await _context.Klient.ToListAsync()) :
                           Problem("Entity set 'ApplicationDbContext.Klient'  is null.");
         }
+        public async Task<IActionResult> Tasks(int? klientId)
+        {
+            var applicationDbContext = _context.Task_
+                .Include(t => t.Klient)
+                .Include(t => t.RelatedTasks)
+                .Include(t => t.Comments)
+                .Include(t => t.Description)
+                .Where(t => t.Klient.Id == klientId);
+            return View(await applicationDbContext.ToListAsync());
+        }
 
         // GET: Klient/Details/5
         public async Task<IActionResult> Details(int? id)

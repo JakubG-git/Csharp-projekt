@@ -11,8 +11,8 @@ using TMS.Data;
 namespace TMS.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230601201226_InitialDb")]
-    partial class InitialDb
+    [Migration("20230602082157_OnCreateDb")]
+    partial class OnCreateDb
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

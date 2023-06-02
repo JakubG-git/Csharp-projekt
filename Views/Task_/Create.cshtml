@@ -31,10 +31,26 @@
                 <label asp-for="Klient" class="control-label"></label>
                 <select asp-for="Klient" class="form-control" asp-items="ViewBag.KlientId"></select>
             </div>
-            
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <select asp-for="Description" class="form-control" asp-items="ViewBag.Description"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Comments" class="control-label"></label>
+                <select asp-for="Comments" class="form-control" asp-items="ViewBag.Comments"></select>
+            </div>
             <div class="form-group">
                 <label asp-for="RelatedTasks" class="control-label"></label>
-                <select asp-for="RelatedTasks" class="form-control" asp-items="ViewBag.RelatedTasks"></select>
+                                            @foreach(var item in ViewBag.RelatedTasks)
+                                            {
+                                                
+                                                <div>
+                                                    
+                                                    <input type="checkbox" name="RelatedTasks" value="@item.Value" /> @item.Text
+                            
+                                                </div>
+                                                    
+                                            }
             </div>
             
             <div class="form-group">

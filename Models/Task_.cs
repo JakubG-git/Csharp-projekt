@@ -16,7 +16,6 @@ public class Task_
     [DisplayFormat(NullDisplayText = "Brak")]
     public ICollection<Task_>? RelatedTasks { get; set; }
     [Display(Name = "Klient przypisany")]
-    [DisplayFormat(NullDisplayText = "Lokalne zadanie")]
     public Klient? Klient { get; set; }
     [Display(Name = "Pracownik przypisany")]
     [DisplayFormat(NullDisplayText = "Brak")]
@@ -27,7 +26,7 @@ public class Task_
     [Display(Name = "Komentarze")]
     [DisplayFormat(NullDisplayText = "Brak")]
     public ICollection<Comments>? Comments { get; set; }
-    [Display(Name = "Data utworzenia")]
+    [Display(Name = "Data utworzenia / modyfikacji")]
     [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
     public DateTime CreatedAt { get; set; }
     [Display(Name = "Deadline")]

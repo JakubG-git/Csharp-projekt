@@ -38,8 +38,18 @@
                 <select asp-for="Klient" class="form-control" asp-items="ViewBag.KlientId"></select>
             </div>
             <div class="form-group">
-                <label asp-for="RelatedTasks" class="control-label"></label>
-                <select asp-for="RelatedTasks" class="form-control" asp-items="ViewBag.RelatedTasks"></select>
+                            <label asp-for="RelatedTasks" class="control-label"></label>
+                            @foreach(var item in ViewBag.RelatedTasks)
+                            {
+                                
+                                <div>
+                                    
+                                    <input type="checkbox" name="RelatedTasks" value="@item.Value" /> @item.Text
+            
+                                </div>
+                                    
+                            }
+
             </div>
             <div class="form-group">
                 <label asp-for="Deadline" class="control-label"></label>

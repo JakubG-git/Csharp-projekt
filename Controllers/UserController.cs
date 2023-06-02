@@ -77,9 +77,9 @@ namespace TMS.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create([Bind("Email, Password, Role")] RegisterModelRole user)
         {
-            _logger.LogInformation("Password: " + user.Password);
-            _logger.LogInformation("Role: " + user.Role);
-            _logger.LogInformation("Email: " + user.Email);
+            _logger.LogDebug("Password: " + user.Password);
+            _logger.LogDebug("Role: " + user.Role);
+            _logger.LogDebug("Email: " + user.Email);
             if (ModelState.IsValid)
             {
                 var newUser = new IdentityUser { UserName = user.Email, Email = user.Email };

@@ -29,6 +29,44 @@
             @Html.DisplayFor(model => model.Status)
         </dd>
         <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Klient)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Klient.Id)
+        </dd>
+        
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.RelatedTasks)
+        </dt>
+        
+        <dd class = "col-sm-10">
+            @if (Model.RelatedTasks != null)
+            {
+                foreach (var item in Model.RelatedTasks)
+                {
+                    <div>
+                        @Html.DisplayFor(modelItem => item.Title)
+                    </div>
+                }
+            }
+        </dd>
+        
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+        
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Comments)
+        </dt>
+        
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Comments)
+        </dd>
+        
+        <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Pracownik)
         </dt>
         <dd class = "col-sm-10">

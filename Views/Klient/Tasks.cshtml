@@ -6,9 +6,6 @@
 
 <h1>Index</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
 <table class="table">
     <thead>
         <tr>
@@ -18,11 +15,6 @@
             <th>
                 @Html.DisplayNameFor(model => model.Piority)
             </th>
-            
-            <th>
-                @Html.DisplayNameFor(model => model.Klient)
-            </th>
-            
             <th>
                 @Html.DisplayNameFor(model => model.Status)
             </th>
@@ -49,10 +41,6 @@
             </td>
             
             <td>
-                @Html.DisplayFor(modelItem => item.Klient.Nazwa)
-            </td>
-            
-            <td>
                 @Html.DisplayFor(modelItem => item.Status)
             </td>
 
@@ -66,8 +54,9 @@
                 @Html.DisplayFor(modelItem => item.Deadline)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-controller="Task_" asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-controller="Task_" asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-controller="Task_" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
                 <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
             </td>
         </tr>
