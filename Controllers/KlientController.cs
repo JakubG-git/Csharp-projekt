@@ -15,10 +15,12 @@ namespace TMS.Controllers
     public class KlientController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly ILogger<KlientController> _logger;
 
-        public KlientController(ApplicationDbContext context)
+        public KlientController(ApplicationDbContext context, ILogger<KlientController> logger)
         {
             _context = context;
+            _logger = logger;
         }
 
         // GET: Klient
@@ -28,14 +30,18 @@ namespace TMS.Controllers
                           View(await _context.Klient.ToListAsync()) :
                           Problem("Entity set 'ApplicationDbContext.Klient'  is null.");
         }
-        public async Task<IActionResult> Tasks(int? klientId)
+        public async Task<IActionResult> Tasks(int? id)
         {
+            _logger.LogWarning("KlientController.Tasks() called with klientId={id}", id);
+            if (id == null || _context.Klient == null)
+            {
+                return NotFound();
+            }
+            
             var applicationDbContext = _context.Task_
                 .Include(t => t.Klient)
-                .Include(t => t.RelatedTasks)
-                .Include(t => t.Comments)
-                .Include(t => t.Description)
-                .Where(t => t.Klient.Id == klientId);
+                .Where(t => t.Klient.Id == id);
+            
             return View(await applicationDbContext.ToListAsync());
         }
 
