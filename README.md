@@ -1,10 +1,12 @@
 ﻿# Task Managment System
+## Author
+Name: **Jakub Głowacki**
+
 ## Description
 This is a task managment system that allows users to create, update, and delete tasks.
-The user can also view all tasks and view tasks assigned to a specific user.
+The user can also view all tasks and view tasks assigned to him.
 The user can and login to the system.
 The Admin can register an User.
-The user can also view statistics about the tasks and users in the system.
 
 ## Installation
 1. Clone the repository

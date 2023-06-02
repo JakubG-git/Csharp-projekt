@@ -49,6 +49,18 @@ namespace TMS.Controllers
             return View(await applicationDbContext.ToListAsync());
         }
 
+        public async Task<IActionResult> UpcomingTaskDeadline()
+        {
+            var applicationDbContext = _context.Task_
+                .Include(t => t.Klient)
+                .Include(t => t.RelatedTasks)
+                .Include(t => t.Comments)
+                .Include(t => t.Description)
+                .Where(t => t.Deadline < DateTime.Now.AddDays(7));
+            
+            return View(await applicationDbContext.ToListAsync());
+        }
+
         // GET: Task_/Details/5
         public async Task<IActionResult> Details(int? id)
         {
